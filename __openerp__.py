@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'MonoCNAB',
+    'name': 'CNAB',
     'version': '1.0',
     'category': 'Tools',
     'description': '',
-    'author': 'Monocon',
-    'website': 'http://monocon.com.br',
+    'author': 'Monjebour',
+    'website': '',
     'summary': 'CNAB',
     'depends': [
         'base',

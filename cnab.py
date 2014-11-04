@@ -8,7 +8,7 @@ import openerp
 from openerp import pooler, tools
 from openerp.osv import fields, osv, expression
 from openerp.tools.translate import _
-from pycnab import controller as cnab
+from lib import controller as cnab
 from time import gmtime, strftime
 import json
 from dateutil import parser
