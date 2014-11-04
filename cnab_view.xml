@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+        <!-- CNAB -->
+        <record model="ir.ui.view" id="mono_cnab_form">
+			<field name="name">mono.cnab.form</field>
+			<field name="model">cnab.cnab</field>
+            <field name="arch" type="xml">
+                <form string="CNAB" version="7.0">
+                    <header>
+                        <button name="lancar" states="draft" string="Lançar" class="oe_highlight"/>
+                        <button name="gera_arquivo" states="done" type="object" string="Gerar Arquivo" class="oe_highlight"/>
+                        <button name="draft" states="done" string="Rascunho" class="oe_highlight"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div >
+                            <h1>
+                                <label string="CNAB Remessa"/>
+                            </h1>
+                        </div>
+                        <separator/>
+                        <group col="4">
+                            <field name="empresa" colspan="2"/>
+                            <field name="conta" colspan="2" domain="[('company_id','=',empresa)]"/>
+                        </group>
+                        <group col="2">
+                            <field name="lote" colspan="2"/>
+                        </group>
+                        <group col="4">
+                            <separator string="Registros" colspan="4"/>
+                            <field name="registros" nolabel="1" colspan="4"/>
+                        </group>
+                        <group col="4">
+                            <field name="data_criacao" colspan="2"/>
+                            <field name="state" colspan="2"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="mono_cnab_tree">
+			<field name="name">mono.cnab.tree</field>
+			<field name="model">cnab.cnab</field>
+            <field name="arch" type="xml">
+                <tree string="CNAB" >
+                    <field name="ref"/>
+                    <field name="empresa"/>
+                    <field name="conta"/>
+                    <field name="data_criacao"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_cnab_form" model="ir.actions.act_window">
+            <field name="name">CNAB</field>
+            <field name="res_model">cnab.cnab</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="mono_cnab_tree"/>
+        </record>
+
+        <record forcecreate="1" id="seq_type_cnab" model="ir.sequence.type">
+            <field name="name">Tipo CNAB</field>
+            <field name="code">cnab.cnab</field>
+        </record>
+        <record forcecreate="1" id="seq_cnab" model="ir.sequence">
+            <field name="name">CNAB</field>
+            <field name="code">cnab.cnab</field>
+            <field name="prefix">CNAB-</field>
+        </record>
+
+        <!-- Registros -->
+        <record model="ir.ui.view" id="mono_cnab_registro_form">
+			<field name="name">mono.cnab.registro.form</field>
+			<field name="model">cnab.registro</field>
+            <field name="arch" type="xml">
+                <form string="Registro CNAB" version="7.0">
+                    <sheet>
+                        <group col="4">
+                            <field name="data_criacao" colspan="2"/>
+                        </group>
+                        <group col="4">
+                            <field name="fatura" colspan="4" domain="[('company_id','=',parent.empresa),('type','=','out_invoice')]"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="mono_cnab_registro_tree">
+			<field name="name">mono.cnab.registro.tree</field>
+			<field name="model">cnab.registro</field>
+            <field name="arch" type="xml">
+                <tree string="Registro CNAB" editable="top">
+                    <field name="fatura" domain="[('company_id','=',parent.empresa),('type','=','out_invoice')]"/>
+                    <field name="juros_mora"/>
+                    <field name="numero"/>
+                    <field name="data_criacao"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_cnab_registro_form" model="ir.actions.act_window">
+            <field name="name">Registro CNAB</field>
+            <field name="res_model">cnab.registro</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="mono_cnab_registro_tree"/>
+        </record>
+
+        <!-- Lotes -->
+        <record model="ir.ui.view" id="mono_cnab_lote_form">
+			<field name="name">mono.cnab.lote.form</field>
+			<field name="model">cnab.lote</field>
+            <field name="arch" type="xml">
+                <form string="Lote CNAB" version="7.0">
+                    <sheet>
+                        <div>
+                            <h1>
+                                <label string="Lote"/>
+                            </h1>
+                        </div>
+                        <separator/>
+                        <group col="4">
+                            <field name="nome" colspan="2"/>
+                            <field name="codigo_tipo" colspan="2"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="mono_cnab_lote_tree">
+			<field name="name">mono.cnab.lote.tree</field>
+			<field name="model">cnab.lote</field>
+            <field name="arch" type="xml">
+                <tree string="Lote CNAB">
+                    <field name="nome"/>
+                    <field name="codigo_tipo"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_cnab_lote_form" model="ir.actions.act_window">
+            <field name="name">Lote CNAB</field>
+            <field name="res_model">cnab.lote</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="mono_cnab_lote_tree"/>
+        </record>
+
+
+        <!-- Conta Bancária -->
+        <record model="ir.ui.view" id="mono_cnab_partner_bank_form">
+			<field name="name">mono.cnab.partner.bank.form</field>
+			<field name="model">res.partner.bank</field>
+			<field name="inherit_id" ref="base.view_partner_bank_form" />
+			<field name="arch" type="xml">
+
+				<group name="bank" string="Information About the Bank" position="after">
+                    <group name="cnab" string="CNAB" col="4">
+                        <field name="cnab_codigo_inscricao" colspan="2"/>
+                        <field name="cnab_numero_inscricao" colspan="2"/>
+                        <field name="cnab_carteira" colspan="2"/>
+                        <field name="cnab_tipo_boleto" colspan="2"/>
+                        <field name="cnab_prazo_protesto" colspan="2"/>
+                    </group>
+				</group>
+
+			</field>
+		</record>
+
+        <!-- Menus -->
+        <menuitem id="menu_cnab" name="CNAB" parent="account.menu_finance" sequence="3"/>
+        <menuitem id="menu_cnab_cnab" name="CNAB Remessa" action="action_cnab_form" parent="menu_cnab"/>
+        <menuitem id="menu_cnab_registro" name="Registros" action="action_cnab_registro_form" parent="menu_cnab"/>
+
+        <menuitem id="menu_cnab_config" name="Configurações" parent="menu_cnab"/>
+        <menuitem id="menu_cnab_lote" name="Lotes" action="action_cnab_lote_form" parent="menu_cnab_config"/>
+
+
+
+    </data>
+</openerp>
